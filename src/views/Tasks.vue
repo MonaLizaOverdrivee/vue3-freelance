@@ -22,3 +22,14 @@ export default {
   components: { TasksPreview }
 };
 </script>
+
+<style scoped>
+.create-link {
+  color: #556472;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.create-link:hover {
+  text-decoration: none;
+}
+</style>

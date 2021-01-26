@@ -1,15 +1,7 @@
 export default {
   state() {
     return {
-      tasks: [
-        {
-          id: 123123213,
-          status: "active",
-          deadline: 1610537843066,
-          discription: "lorem lorem lorem lorem",
-          title: "Task title"
-        }
-      ]
+      tasks: []
     };
   },
   getters: {
@@ -19,34 +11,47 @@ export default {
   },
   mutations: {
     ADD_TASK(state, task) {
-      state.tasks.push(task);
+      state.tasks.unshift(task);
     },
     CHANGE_STATUS(state, payload) {
       state.tasks.forEach(i => {
-        if (i.id === +payload.id) i.status = payload.status;
+        if (i.id === payload.id) i.status = payload.status;
       });
     }
   },
   actions: {
     async loadTasks({ state }) {
-      const response = await fetch(`${process.env.URL}tasks.json`, {
+      const response = await fetch(`${process.env.VUE_APP_FIREBASE}.json`, {
         method: "GET"
       });
-      state.tasks = Object.keys(response).map(i => ({
-        id: i,
-        ...response[i]
-      }));
+      const firebaseResponse = await response.json();
+      console.log(firebaseResponse);
+      if (firebaseResponse) {
+        state.tasks = Object.keys(firebaseResponse).map(i => ({
+          id: i,
+          ...firebaseResponse[i]
+        }));
+      }
+      console.log(state.tasks);
     },
     async recordTask({ commit }, task) {
-      await fetch("url", {
+      const response = await fetch(`${process.env.VUE_APP_FIREBASE}.json`, {
         method: "POST",
         "Content-type": "aplication/json",
         body: JSON.stringify(task)
       });
-      commit("ADD_TASK", task);
+      const firebaseResponse = await response.json();
+      commit("ADD_TASK", {
+        id: firebaseResponse.name,
+        ...task
+      });
+      console.log({
+        id: firebaseResponse.name,
+        ...task
+      });
     },
     async getIdChangedTaskStatus({ commit }, payload) {
-      await fetch(`${process.env.URL}tasks/${payload.id}.json`, {
+      await fetch(`${process.env.VUE_APP_FIREBASE}/${payload.id}.json`, {
         method: "PATCH",
         "Content-type": "aplication/json",
         body: JSON.stringify({ status: payload.status })

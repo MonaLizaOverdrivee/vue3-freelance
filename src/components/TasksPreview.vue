@@ -7,7 +7,7 @@
     <p>
       <strong>
         <small>
-          {{ new Date(task.deadline).toLocaleString() }}
+          {{ new Date(task.deadline).toLocaleDateString() }}
         </small>
       </strong>
     </p>

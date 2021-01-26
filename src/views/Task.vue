@@ -34,9 +34,8 @@ export default {
   setup(props) {
     const store = useStore();
     const task = computed(() =>
-      store.getters.tasks.find(i => i.id === +props.taskid)
+      store.getters.tasks.find(i => i.id === props.taskid)
     );
-    console.log(props.taskid);
     function changeStatus(status) {
       store.dispatch("getIdChangedTaskStatus", {
         id: props.taskid,
@@ -52,5 +51,3 @@ export default {
   components: { AppStatus }
 };
 </script>
-
-<style scoped></style>

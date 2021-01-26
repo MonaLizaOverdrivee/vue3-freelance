@@ -7,12 +7,12 @@
 
 <script>
 import TheNavbar from "./components/TheNavbar";
-import { useStore } from 'vuex'
+import { useStore } from "vuex";
 
 export default {
-  setup(){
-    const store = useStore()
-    store.dispatch('loadTasks')
+  setup() {
+    const store = useStore();
+    store.dispatch("loadTasks");
   },
   components: {
     TheNavbar

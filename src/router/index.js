@@ -16,14 +16,11 @@ const routes = [
     path: "/task/:taskid",
     component: Task,
     props: true
-    // children: [
-    //   {path: ':taskid', component: Task, props: true}
-    // ]
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
   linkActiveClass: "active",
   linkExactActiveClass: "active"
